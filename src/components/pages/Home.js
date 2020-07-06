@@ -6,11 +6,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [books, setBook] = useState([]);
-  const notify = () =>toast.warn('Book Deleted Successfully!', {
-    position: "bottom-right",
-    autoClose: 2000,
-    hideProgressBar: true
+  // Function to display toaster
+  const notify = () =>
+    toast.warn("Book Deleted Successfully!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
     });
+  // Function to sort the table
   const sortTable = (table, col, reverse) => {
     var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
       tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
@@ -52,7 +55,7 @@ const Home = () => {
     },
     [makeSortable]
   );
-
+  // Function to load the books
   const loadBooks = async () => {
     const result = await axios.get("http://localhost:3003/books");
     setBook(result.data.reverse());
@@ -62,13 +65,13 @@ const Home = () => {
     loadBooks();
     makeAllSortable();
   }, [makeAllSortable]);
-
+  // Function to delete the books
   const deleteBook = async (id) => {
     await axios.delete(`http://localhost:3003/books/${id}`);
     loadBooks();
     notify();
   };
-
+  // Function to search from the list of books
   const searchList = () => {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("searchInput");
@@ -92,7 +95,7 @@ const Home = () => {
     <div className="container">
       <div className="py-4">
         <div>
-          <ToastContainer/>
+          <ToastContainer />
         </div>
         <div className="top-container">
           <h4 className="w-50 float-left">Book List</h4>
@@ -154,9 +157,6 @@ const Home = () => {
             ))}
           </tbody>
         </table>
-        {/* <div className="alert alert-success" role="alert">
-          Book Deleted Successfully
-        </div> */}
       </div>
     </div>
   );

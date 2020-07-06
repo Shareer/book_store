@@ -11,16 +11,18 @@ const AddBook = () => {
     authorName: "",
     createdDate: "",
   });
-  const notify = () =>toast.success('Book Added Successfully!', {
-    position: "bottom-right",
-    autoClose: 2000,
-    hideProgressBar: true
+  // Function to display toaster
+  const notify = () =>
+    toast.success("Book Added Successfully!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
     });
   const { bookName, authorName, createdDate } = book;
   const onInputChange = (e) => {
     setBook({ ...book, [e.target.name]: e.target.value });
   };
-
+  // Function to add a new book to the list
   const onSubmit = async (e) => {
     e.preventDefault();
     await axios.post("http://localhost:3003/books", book);
@@ -33,8 +35,7 @@ const AddBook = () => {
   return (
     <div className="container">
       <div className="w-75 mx-auto shadow p-5 mt-5">
-      <ToastContainer   
-          />
+        <ToastContainer />
         <h2 className="text-center mb-4">Add Book</h2>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="form-group">
@@ -60,9 +61,7 @@ const AddBook = () => {
 
           <div className="input-group mb-3 input-group-lg">
             <div className="input-group-prepend">
-              <span className="input-group-text">
-                Created Date
-              </span>
+              <span className="input-group-text">Created Date</span>
             </div>
             <input
               type="date"
@@ -73,7 +72,6 @@ const AddBook = () => {
               onChange={(e) => onInputChange(e)}
             />
           </div>
-
           <button className="btn add-book w-25 float-right">Add </button>
         </form>
       </div>

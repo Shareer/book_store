@@ -34,7 +34,9 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <Link className="btn add-book" to="/books/add">Add Book</Link>
+        <Link className="btn add-book" to="/books/add">
+          Add Book
+        </Link>
       </div>
     </nav>
   );
