@@ -1,9 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [books, setBook] = useState([]);
+  const notify = () =>toast.warn('Book Deleted Successfully!', {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: true
+    });
   const sortTable = (table, col, reverse) => {
     var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
       tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
@@ -46,7 +53,6 @@ const Home = () => {
     [makeSortable]
   );
 
-
   const loadBooks = async () => {
     const result = await axios.get("http://localhost:3003/books");
     setBook(result.data.reverse());
@@ -60,6 +66,7 @@ const Home = () => {
   const deleteBook = async (id) => {
     await axios.delete(`http://localhost:3003/books/${id}`);
     loadBooks();
+    notify();
   };
 
   const searchList = () => {
@@ -84,7 +91,10 @@ const Home = () => {
   return (
     <div className="container">
       <div className="py-4">
-            <div className="top-container">
+        <div>
+          <ToastContainer/>
+        </div>
+        <div className="top-container">
           <h4 className="w-50 float-left">Book List</h4>
           <input
             type="text"

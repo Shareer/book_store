@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditBook = () => {
   let history = useHistory();
@@ -10,6 +12,11 @@ const EditBook = () => {
     authorName: "",
     createdDate: "",
   });
+  const notify = () =>toast.success('Book Updated Successfully!', {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: true
+    });
   const { bookName, authorName, createdDate } = book;
   const onInputChange = e => {
     setBook({ ...book, [e.target.name]: e.target.value });
@@ -26,13 +33,18 @@ const EditBook = () => {
   const onSubmit = async e => {
     e.preventDefault();
     await axios.put(`http://localhost:3003/books/${id}`, book);
-    history.push("/");
+    notify();
+    setTimeout(() => {
+      history.push("/");
+    }, 1000);
   };
 
 
   return (
     <div className="container">
       <div className="w-75 mx-auto shadow p-5 mt-5">
+      <ToastContainer   
+          />
         <h2 className="text-center mb-4">Edit Book</h2>
         <form onSubmit={e => onSubmit(e)}>
             <div className="form-group">

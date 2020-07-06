@@ -18,3 +18,11 @@ th, .add-book {
 .logo:hover{
   color: #21a0d2 !important;
 }
+
+.Toastify__toast--success{
+  background-color: #28a745 !important;
+}
+
+.Toastify__toast--warning{
+  background-color: #dc3545 !important;
+}

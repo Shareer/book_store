@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddBook = () => {
   let history = useHistory();
@@ -9,6 +11,11 @@ const AddBook = () => {
     authorName: "",
     createdDate: "",
   });
+  const notify = () =>toast.success('Book Added Successfully!', {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: true
+    });
   const { bookName, authorName, createdDate } = book;
   const onInputChange = (e) => {
     setBook({ ...book, [e.target.name]: e.target.value });
@@ -17,12 +24,17 @@ const AddBook = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     await axios.post("http://localhost:3003/books", book);
-    history.push("/");
+    notify();
+    setTimeout(() => {
+      history.push("/");
+    }, 1000);
   };
 
   return (
     <div className="container">
       <div className="w-75 mx-auto shadow p-5 mt-5">
+      <ToastContainer   
+          />
         <h2 className="text-center mb-4">Add Book</h2>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="form-group">
